@@ -1,0 +1,22 @@
+version: "3"
+services:
+  database:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  api:
+    build: ./api
+    command: rails s -b 0.0.0.0
+    ports:
+      - "3001:3000"
+    volumes:
+      - /usr/local/bundle/gems
+      - ./api:/api
+    depends_on:
+      - database
+    environment:
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
