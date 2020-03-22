@@ -8,7 +8,7 @@ services:
     build: ./api
     command: rails s -b 0.0.0.0
     ports:
-      - "3001:3000"
+      - "5000:3000"
     volumes:
       - /usr/local/bundle/gems
       - ./api:/api
@@ -20,3 +20,14 @@ services:
       - PGDATABASE=postgres
       - PGPASSWORD=postgres_password
       - PGPORT=5432
+  client:
+    tty: true
+    build: ./client
+    command: yarn start
+    ports:
+      - "3000:3000"
+    volumes:
+      - /client/node_modules
+      - ./client:/client
+    depends_on:
+      - api
