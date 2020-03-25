@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Typography, Button } from '@material-ui/core';
-import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
-import HelpFormModal from '../components/HelpFormModal';
+import Typography from '@material-ui/core/Typography';
+import AskHelp from '../components/AskHelp';
+import Auth from '../components/Auth';
 
 const style = {
   display: 'flex',
@@ -11,22 +11,19 @@ const style = {
 };
 
 const HeaderContent = () => {
-  const [helpModalOpen, setHelpModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const user = null;
 
   return (
     <div style={style}>
       <Typography noWrap color={'textSecondary'}>
         BayaNiJuan
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={<LocalHospitalIcon />}
-        onClick={() => setHelpModalOpen(true)}
-      >
-        Ask For Help!
-      </Button>
-      <HelpFormModal open={helpModalOpen} setOpen={setHelpModalOpen} />
+      {user ? (
+        <AskHelp modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      ) : (
+        <Auth modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      )}
     </div>
   );
 };
