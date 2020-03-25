@@ -6,9 +6,9 @@ const Main = () => {
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '91vh',
-    latitude: 14.6042,
-    longitude: 120.9822,
-    zoom: 12
+    latitude: 12.879721,
+    longitude: 121.774017,
+    zoom: 5
   });
   const [markers] = useState([
     {
@@ -32,6 +32,7 @@ const Main = () => {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       setViewport({
         ...viewport,
+        zoom: 12,
         latitude: coords.latitude,
         longitude: coords.longitude
       });
