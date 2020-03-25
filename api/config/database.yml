@@ -26,13 +26,13 @@ default: &default
 
 development:
   <<: *default
-  database: tulongph_development
+  database: bayanijuan_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  #username: tulongph
+  #username: bayanijuan
   # The password associated with the postgres role (username).
   #password:
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -55,7 +55,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: tulongph_test
+  database: bayanijuan_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -78,6 +78,6 @@ test:
 #
 production:
   <<: *default
-  database: tulongph_production
-  username: tulongph
-  password: <%= ENV['TULONGPH_DATABASE_PASSWORD'] %>
+  database: bayanijuan_production
+  username: bayanijuan
+  password: <%= ENV['BAYANIJUAN_DATABASE_PASSWORD'] %>

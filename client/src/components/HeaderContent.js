@@ -16,7 +16,7 @@ const HeaderContent = () => {
   return (
     <div style={style}>
       <Typography noWrap color={'textSecondary'}>
-        Tulong.PH
+        BayaNiJuan
       </Typography>
       <Button
         variant="contained"
