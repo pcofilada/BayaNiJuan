@@ -6,7 +6,8 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  Link
 } from '@material-ui/core';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import MobileNumberInput from './MobileNumberInput';
@@ -52,6 +53,12 @@ const AuthenticationCodeContent = ({ setModalOpen }) => (
         variant="outlined"
         fullWidth
       />
+      <small>
+        Didn't get the code?
+        <Link href="#" onClick={e => e.preventDefault}>
+          Tap here to resend
+        </Link>
+      </small>
     </DialogContent>
     <DialogActions>
       <Button onClick={() => setModalOpen(false)} color="primary">
@@ -79,7 +86,9 @@ const Auth = ({ modalOpen, setModalOpen }) => {
         onClose={() => setModalOpen(false)}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">BayaNiJuan</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          <center>BayaNiJuan</center>
+        </DialogTitle>
         {codeSent ? (
           <AuthenticationCodeContent setModalOpen={setModalOpen} />
         ) : (

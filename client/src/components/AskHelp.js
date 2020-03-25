@@ -9,6 +9,7 @@ import {
   DialogTitle
 } from '@material-ui/core';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
+import MobileNumberInput from './MobileNumberInput';
 
 const AskHelp = ({ modalOpen, setModalOpen }) => (
   <>
@@ -33,6 +34,16 @@ const AskHelp = ({ modalOpen, setModalOpen }) => (
         </DialogContentText>
         <TextField
           autoFocus
+          id="mobile"
+          label="Contact Number"
+          type="string"
+          variant="outlined"
+          fullWidth
+          InputProps={{
+            inputComponent: MobileNumberInput
+          }}
+        />
+        <TextField
           margin="dense"
           id="fullname"
           label="Full Name"
@@ -40,15 +51,6 @@ const AskHelp = ({ modalOpen, setModalOpen }) => (
           variant="outlined"
           fullWidth
           placeholder="Juan Dela Cruz"
-        />
-        <TextField
-          margin="dense"
-          id="contact"
-          label="Contact Number"
-          type="string"
-          variant="outlined"
-          fullWidth
-          placeholder="09171234567"
         />
         <TextField
           margin="dense"
