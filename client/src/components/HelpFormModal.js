@@ -6,8 +6,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
-  TextareaAutosize
+  DialogTitle
 } from '@material-ui/core';
 
 const HelpFormModal = ({ open, setOpen }) => (
@@ -27,6 +26,7 @@ const HelpFormModal = ({ open, setOpen }) => (
         id="fullname"
         label="Full Name"
         type="string"
+        variant="outlined"
         fullWidth
         placeholder="Juan Dela Cruz"
       />
@@ -35,6 +35,7 @@ const HelpFormModal = ({ open, setOpen }) => (
         id="contact"
         label="Contact Number"
         type="string"
+        variant="outlined"
         fullWidth
         placeholder="09171234567"
       />
@@ -44,8 +45,8 @@ const HelpFormModal = ({ open, setOpen }) => (
         label="Details"
         type="string"
         rows={5}
-        rowsMax={5}
-        multiline={true}
+        multiline
+        variant="outlined"
         fullWidth
         placeholder="Please provide us what help do you need."
       />
