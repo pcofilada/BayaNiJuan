@@ -6,7 +6,7 @@ module Mutations
       type Types::AccountType
 
       def resolve(attributes:)
-        ::Auth.new(attributes.to_h).signin
+        ::Signin.new(attributes.to_h).call
       end
     end
   end
