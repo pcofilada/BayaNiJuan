@@ -6,10 +6,10 @@ class Signin
   end
 
   def call
-    return unless @account.valid? && @account.touch
+    return unless @account.valid?
 
+    @account.update(auth_code: generate_auth_code)
     send_code
-
     @account
   end
 
@@ -24,5 +24,12 @@ class Signin
       .create(from: credentials.dig(:twilio, :phone_number),
               to: @account.mobile_number,
               body: "Your authentication code is #{@account.auth_code}.")
+  end
+
+  def generate_auth_code
+    loop do
+      code = SecureRandom.hex(3)
+      break code unless Account.where(auth_code: code).first
+    end
   end
 end
