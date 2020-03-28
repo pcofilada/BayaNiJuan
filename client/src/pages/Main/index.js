@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import ReactMapGL, { NavigationControl, Marker, Popup } from 'react-map-gl';
 import { Icon } from '@material-ui/core';
+import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks';
+
+const FETCH_ASSISTANCES = gql`
+  query assistances {
+    assistances {
+      id
+      lat
+      lng
+      requester
+      contactNumber
+      details
+    }
+  }
+`;
 
 const Main = () => {
   const [viewport, setViewport] = useState({
@@ -10,22 +25,7 @@ const Main = () => {
     longitude: 121.774017,
     zoom: 5
   });
-  const [markers] = useState([
-    {
-      id: 1,
-      lat: 14.6042,
-      lng: 120.9822,
-      requester: 'Juan Dela Cruz',
-      details: 'We need some food please help us.'
-    },
-    {
-      id: 2,
-      lat: 14.60242,
-      lng: 120.9822,
-      requester: 'Juana Dela Cruz',
-      details: 'We need some assistant'
-    }
-  ]);
+  const { loading, error, data } = useQuery(FETCH_ASSISTANCES);
   const [selectedMarker, setSelectedMarker] = useState(null);
 
   useEffect(() => {
@@ -39,8 +39,12 @@ const Main = () => {
     });
   }, [viewport]);
 
-  const renderMarkers = () =>
-    markers.map(marker => (
+  const renderMarkers = () => {
+    if (loading || error) {
+      return null;
+    }
+
+    return data.assistances.map(marker => (
       <Marker key={marker.id} latitude={marker.lat} longitude={marker.lng}>
         <Icon
           fontSize="large"
@@ -52,6 +56,7 @@ const Main = () => {
         </Icon>
       </Marker>
     ));
+  };
 
   const renderPopup = () => {
     return (
@@ -64,7 +69,8 @@ const Main = () => {
           closeOnClick={false}
         >
           <div>
-            <h4>Requester: {selectedMarker.requester}</h4>
+            <h3>Requester: {selectedMarker.requester}</h3>
+            <h4>Contact Number: {selectedMarker.contactNumber}</h4>
             <p>
               <label>Details: </label>
               {selectedMarker.details}
