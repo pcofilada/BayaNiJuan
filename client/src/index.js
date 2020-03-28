@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import Cookies from 'js-cookie';
+import { AuthContext } from './context/auth';
 import Router from './routes';
 import * as serviceWorker from './serviceWorker';
 
@@ -9,11 +11,17 @@ const client = new ApolloClient({
   uri: `${process.env.REACT_APP_API_URL}/graphql`
 });
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <Router />
-  </ApolloProvider>
-);
+const App = () => {
+  const authToken = Cookies.get('token');
+
+  return (
+    <AuthContext.Provider value={{ authToken }}>
+      <ApolloProvider client={client}>
+        <Router />
+      </ApolloProvider>
+    </AuthContext.Provider>
+  );
+};
 
 render(<App />, document.getElementById('root'));
 

@@ -12,6 +12,7 @@ import {
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
+import Cookies from 'js-cookie';
 import MobileNumberInput from './MobileNumberInput';
 
 const SIGNIN = gql`
@@ -86,6 +87,9 @@ const AuthenticationCodeContent = ({ setCodeSent, setModalOpen, userId }) => {
     onCompleted({ verify: { token } }) {
       setModalOpen(false);
       setCodeSent(false);
+      Cookies.set('token', token);
+
+      window.location.reload();
     }
   });
 
