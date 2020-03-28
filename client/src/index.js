@@ -7,13 +7,20 @@ import { AuthContext } from './context/auth';
 import Router from './routes';
 import * as serviceWorker from './serviceWorker';
 
+const authToken = Cookies.get('token');
+
 const client = new ApolloClient({
-  uri: `${process.env.REACT_APP_API_URL}/graphql`
+  uri: `${process.env.REACT_APP_API_URL}/graphql`,
+  request: operation => {
+    operation.setContext({
+      headers: {
+        authorization: authToken ? authToken : ''
+      }
+    });
+  }
 });
 
 const App = () => {
-  const authToken = Cookies.get('token');
-
   return (
     <AuthContext.Provider value={{ authToken }}>
       <ApolloProvider client={client}>

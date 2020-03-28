@@ -2,7 +2,7 @@ class JsonWebToken
   SECRET_KEY_BASE = Rails.application.credentials.dig(:secret_key_base)
 
   def self.encode(id)
-    payload = { user_id: id }
+    payload = { id: id }
 
     JWT.encode(payload, SECRET_KEY_BASE)
   end
