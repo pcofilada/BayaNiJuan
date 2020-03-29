@@ -75,10 +75,10 @@ const Main = () => {
           <div>
             <h3>Requester: {selectedMarker.requester}</h3>
             <h4>Contact Number: {selectedMarker.contactNumber}</h4>
-            <p>
+            <div>
               <label>Details: </label>
-              {selectedMarker.details}
-            </p>
+              <pre>{selectedMarker.details}</pre>
+            </div>
           </div>
         </Popup>
       )
