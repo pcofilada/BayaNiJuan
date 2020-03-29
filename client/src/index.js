@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { render } from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -21,8 +21,13 @@ const client = new ApolloClient({
 });
 
 const App = () => {
+  const [coordinates, setCoordinates] = useState({
+    lat: 12.879721,
+    lng: 121.774017
+  });
+
   return (
-    <AuthContext.Provider value={{ authToken }}>
+    <AuthContext.Provider value={{ authToken, coordinates, setCoordinates }}>
       <ApolloProvider client={client}>
         <Router />
       </ApolloProvider>

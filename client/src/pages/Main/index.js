@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ReactMapGL, { NavigationControl, Marker, Popup } from 'react-map-gl';
 import { Icon } from '@material-ui/core';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
+import { AuthContext } from '../../context/auth';
 
 const FETCH_ASSISTANCES = gql`
   query assistances {
@@ -18,23 +19,26 @@ const FETCH_ASSISTANCES = gql`
 `;
 
 const Main = () => {
+  const { coordinates, setCoordinates } = useContext(AuthContext);
+
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '91vh',
-    latitude: 12.879721,
-    longitude: 121.774017,
-    zoom: 5
+    latitude: coordinates.lat,
+    longitude: coordinates.lng,
+    zoom: 12
   });
   const { loading, error, data } = useQuery(FETCH_ASSISTANCES);
   const [selectedMarker, setSelectedMarker] = useState(null);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
+      setCoordinates({ lat: coords.latitude, lng: coords.longitude });
       setViewport({
         ...viewport,
         zoom: 12,
-        latitude: coords.latitude,
-        longitude: coords.longitude
+        longitude: coords.longitude,
+        latitude: coords.latitude
       });
     });
   }, [viewport]);
