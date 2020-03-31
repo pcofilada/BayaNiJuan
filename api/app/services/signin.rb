@@ -23,7 +23,7 @@ class Signin
       .messages
       .create(from: credentials.dig(:twilio, :phone_number),
               to: @account.mobile_number,
-              body: "Your authentication code is #{@account.auth_code}.")
+              body: "Your authentication code is #{@account.auth_code}. For your protection, do not share this code with anyone.")
   end
 
   def generate_auth_code
