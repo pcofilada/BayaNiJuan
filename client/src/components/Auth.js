@@ -33,7 +33,7 @@ const VERIFY = gql`
 
 const MobileNumberContent = ({ setModalOpen, setCodeSent, setUserId }) => {
   const [mobileNumber, setMobileNumber] = useState('');
-  const [signin] = useMutation(SIGNIN, {
+  const [signin, { loading }] = useMutation(SIGNIN, {
     onCompleted({ signin: { id } }) {
       setMobileNumber(null);
       setCodeSent(true);
@@ -63,6 +63,7 @@ const MobileNumberContent = ({ setModalOpen, setCodeSent, setUserId }) => {
           variant="outlined"
           value={mobileNumber}
           onChange={e => setMobileNumber(e.target.value)}
+          disabled={loading}
           fullWidth
           InputProps={{
             inputComponent: MobileNumberInput
@@ -70,10 +71,14 @@ const MobileNumberContent = ({ setModalOpen, setCodeSent, setUserId }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setModalOpen(false)} color="primary">
+        <Button
+          onClick={() => setModalOpen(false)}
+          color="primary"
+          disabled={loading}
+        >
           Cancel
         </Button>
-        <Button type="submit" color="primary">
+        <Button type="submit" color="primary" disabled={loading}>
           Continue
         </Button>
       </DialogActions>
@@ -83,7 +88,7 @@ const MobileNumberContent = ({ setModalOpen, setCodeSent, setUserId }) => {
 
 const AuthenticationCodeContent = ({ setCodeSent, setModalOpen, userId }) => {
   const [authCode, setAuthCode] = useState('');
-  const [verify] = useMutation(VERIFY, {
+  const [verify, { loading }] = useMutation(VERIFY, {
     onCompleted({ verify: { token } }) {
       setModalOpen(false);
       setCodeSent(false);
@@ -120,6 +125,7 @@ const AuthenticationCodeContent = ({ setCodeSent, setModalOpen, userId }) => {
           variant="outlined"
           value={authCode}
           onChange={e => setAuthCode(e.target.value)}
+          disabled={loading}
           fullWidth
         />
         <small>
@@ -130,7 +136,7 @@ const AuthenticationCodeContent = ({ setCodeSent, setModalOpen, userId }) => {
         </small>
       </DialogContent>
       <DialogActions>
-        <Button type="submit" color="primary">
+        <Button type="submit" color="primary" disabled={loading}>
           Submit
         </Button>
       </DialogActions>
