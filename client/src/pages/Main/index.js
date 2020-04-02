@@ -41,7 +41,7 @@ const Main = () => {
         latitude: coords.latitude
       });
     });
-  }, [viewport]);
+  }, []);
 
   const renderMarkers = () => {
     if (loading || error) {
