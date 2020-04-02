@@ -10,26 +10,10 @@ import {
   Link
 } from '@material-ui/core';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import Cookies from 'js-cookie';
+import { SIGNIN, VERIFY } from '../graphql/mutations/auth';
 import MobileNumberInput from './MobileNumberInput';
-
-const SIGNIN = gql`
-  mutation signin($data: SigninInput!) {
-    signin(input: $data) {
-      id
-    }
-  }
-`;
-
-const VERIFY = gql`
-  mutation verify($data: VerifyInput!) {
-    verify(input: $data) {
-      token
-    }
-  }
-`;
 
 const MobileNumberContent = ({ setModalOpen, setCodeSent, setUserId }) => {
   const [mobileNumber, setMobileNumber] = useState('');

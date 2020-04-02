@@ -1,22 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import ReactMapGL, { NavigationControl, Marker, Popup } from 'react-map-gl';
 import { Icon } from '@material-ui/core';
-import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
+import { FETCH_ASSISTANCES } from '../../graphql/queries/assistance';
 import { AuthContext } from '../../context/auth';
-
-const FETCH_ASSISTANCES = gql`
-  query assistances {
-    assistances {
-      id
-      lat
-      lng
-      requester
-      contactNumber
-      details
-    }
-  }
-`;
 
 const Main = () => {
   const { coordinates, setCoordinates } = useContext(AuthContext);
@@ -77,7 +64,7 @@ const Main = () => {
             <h4>Contact Number: {selectedMarker.contactNumber}</h4>
             <div>
               <label>Details: </label>
-              <pre>{selectedMarker.details}</pre>
+              <p>{selectedMarker.details}</p>
             </div>
           </div>
         </Popup>
