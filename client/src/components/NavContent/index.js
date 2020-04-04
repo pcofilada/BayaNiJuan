@@ -15,6 +15,7 @@ const list = [
     icon: 'message'
   }
 ];
+
 const NavContent = () => (
   <List>
     {list.map(({ primaryText, icon }, i) => (

@@ -19,7 +19,8 @@
     "react-map-gl": "^5.2.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "react-text-mask": "^5.4.3"
+    "react-text-mask": "^5.4.3",
+    "styled-components": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

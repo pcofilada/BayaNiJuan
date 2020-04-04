@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import ReactMapGL, { NavigationControl, Marker, Popup } from 'react-map-gl';
-import { Icon } from '@material-ui/core';
+import ReactMapGL, { NavigationControl } from 'react-map-gl';
 import { useQuery } from '@apollo/react-hooks';
 import { FETCH_ASSISTANCES } from '../../graphql/queries/assistance';
 import { AuthContext } from '../../context/auth';
+import MapMarker from '../../components/MapMarker';
+import MapPopup from '../../components/MapPopup';
+import { NavigationControlWrapper } from './style';
 
 const Main = () => {
   const { coordinates, setCoordinates } = useContext(AuthContext);
-
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '91vh',
@@ -20,15 +21,21 @@ const Main = () => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
-      setCoordinates({ lat: coords.latitude, lng: coords.longitude });
-      setViewport({
-        ...viewport,
-        zoom: 12,
-        longitude: coords.longitude,
-        latitude: coords.latitude
-      });
+      const { latitude, longitude } = coords;
+
+      setCoordinates(prevState => ({
+        ...prevState,
+        lat: latitude,
+        lng: longitude
+      }));
+      setViewport(prevState => ({
+        ...prevState,
+        latitude,
+        longitude,
+        zoom: 12
+      }));
     });
-  }, []);
+  }, [setCoordinates]);
 
   const renderMarkers = () => {
     if (loading || error) {
@@ -36,57 +43,37 @@ const Main = () => {
     }
 
     return data.assistances.map(marker => (
-      <Marker key={marker.id} latitude={marker.lat} longitude={marker.lng}>
-        <Icon
-          fontSize="large"
-          color="secondary"
-          onClick={() => setSelectedMarker(marker)}
-          style={{ cursor: 'pointer' }}
-        >
-          location_on_sharp
-        </Icon>
-      </Marker>
+      <MapMarker
+        key={marker.id}
+        marker={marker}
+        clickFunction={() => setSelectedMarker(marker)}
+      />
     ));
   };
 
-  const renderPopup = () => {
-    return (
-      selectedMarker && (
-        <Popup
-          offsetLeft={18}
-          longitude={selectedMarker.lng}
-          latitude={selectedMarker.lat}
-          onClose={() => setSelectedMarker(null)}
-          closeOnClick={false}
-        >
-          <div>
-            <h3>Requester: {selectedMarker.requester}</h3>
-            <h4>Contact Number: {selectedMarker.contactNumber}</h4>
-            <div>
-              <label>Details: </label>
-              <p>{selectedMarker.details}</p>
-            </div>
-          </div>
-        </Popup>
-      )
+  const renderPopup = () =>
+    selectedMarker && (
+      <MapPopup
+        content={selectedMarker}
+        closeFunction={() => setSelectedMarker(null)}
+      />
     );
-  };
 
   return (
-    <div>
+    <>
       <ReactMapGL
         {...viewport}
         mapStyle="mapbox://styles/mapbox/streets-v10"
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         onViewportChange={viewport => setViewport(viewport)}
       >
-        <div style={{ position: 'absolute', right: '15px', top: '15px' }}>
+        <NavigationControlWrapper>
           <NavigationControl />
-        </div>
+        </NavigationControlWrapper>
         {renderMarkers()}
         {renderPopup()}
       </ReactMapGL>
-    </div>
+    </>
   );
 };
 

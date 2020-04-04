@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
 import Typography from '@material-ui/core/Typography';
-import { AuthContext } from '../context/auth';
-import AskHelp from '../components/AskHelp';
-import Auth from '../components/Auth';
-
-const style = {
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'space-between',
-  alignItems: 'center'
-};
+import { AuthContext } from '../../context/auth';
+import AskHelp from '../AskHelp';
+import Auth from '../Auth';
+import { HeaderContentWrapper } from './style';
 
 const HeaderContent = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div style={style}>
+    <HeaderContentWrapper>
       <Typography noWrap color={'textSecondary'}>
         BayaNiJuan
       </Typography>
@@ -28,7 +22,7 @@ const HeaderContent = () => {
           )
         }
       </AuthContext.Consumer>
-    </div>
+    </HeaderContentWrapper>
   );
 };
 

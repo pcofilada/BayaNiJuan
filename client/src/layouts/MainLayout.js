@@ -20,14 +20,14 @@ const MainLayout = ({ children }) => (
         <CssBaseline />
         <Header>
           <Toolbar>
-            {/* <SidebarTrigger className={headerStyles.leftTrigger}>
+            <SidebarTrigger className={headerStyles.leftTrigger}>
               <SidebarTriggerIcon />
-            </SidebarTrigger> */}
+            </SidebarTrigger>
             <HeaderContent />
           </Toolbar>
         </Header>
         <Content>{children}</Content>
-        {/* <Sidebar>
+        <Sidebar>
           {({ collapsed }) => (
             <>
               <NavHeader collapsed={collapsed} />
@@ -36,7 +36,7 @@ const MainLayout = ({ children }) => (
               </div>
             </>
           )}
-        </Sidebar> */}
+        </Sidebar>
       </>
     )}
   </Root>

@@ -25,8 +25,7 @@ const MobileNumberInput = ({ inputRef, ...other }) => (
       /\d/,
       /\d/
     ]}
-    showMask
-    placeholderChar={'\u2000'}
+    guide={false}
   />
 );
 
